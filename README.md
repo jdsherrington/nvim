@@ -40,6 +40,6 @@ My personal Neovim config. Based on Kickstart, but has since been spun off into 
 
 - windwp/nvim-autopairs: Automatically inserts the closing part of pairs (like (), [], {}, "", '') when I type the opening one, and can optionally add parentheses () after selecting a function/method during autocompletion.
 
-xiyaowong/transparent.nvim: Makes the Neovim editor background transparent, allowing my terminal emulator's background or desktop wallpaper to show through for theming purposes.
+- xiyaowong/transparent.nvim: Makes the Neovim editor background transparent, allowing my terminal emulator's background or desktop wallpaper to show through for theming purposes.
 
 - custom.plugins (via import): Acts as a placeholder entry point for loading any additional plugin configurations I might want to trial.
