@@ -1,3 +1,4 @@
+-- ~/.config/nvim/lua/plugins/transparency.lua
 return {
   'xiyaowong/transparent.nvim',
 
@@ -24,7 +25,6 @@ return {
         'LineNr',
         'NonText',
         'SignColumn',
-        'CursorLine',
         'CursorLineNr',
         'StatusLine',
         'StatusLineNC',
