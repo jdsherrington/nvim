@@ -2,7 +2,7 @@
 
 My personal Neovim config. Originally based on Kickstart, but has since been heavily customised to fit my needs.
 
-- [jdsherrington/sequence](https://github.com/jdsherrington/sequence/nvim) A low-contrast, cozy, focused colorscheme created by me.
+- [jdsherrington/sequence](https://github.com/jdsherrington/sequence/tree/main/nvim) A low-contrast, cozy, focused colorscheme created by me.
 
 - [numToStr/Comment.nvim](https://github.com/numToStr/Comment.nvim): Quickly toggle comments on lines or selections using gc (or other configured keys), saving me from manually adding/removing comment syntax.
 
