@@ -7,16 +7,14 @@ return {
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     { 'j-hui/fidget.nvim', opts = {} },
-    -- Add nvim-cmp related LSP dependencies here if not already handled by cmp plugin spec
-    'hrsh7th/cmp-nvim-lsp',
+    -- nvim-cmp related LSP dependencies are managed by blink.cmp
   },
   config = function()
     local lspconfig = require 'lspconfig'
     local mason = require 'mason'
     local mason_lspconfig = require 'mason-lspconfig'
     local mason_tool_installer = require 'mason-tool-installer'
-    local cmp_nvim_lsp = require 'cmp_nvim_lsp'
-    local capabilities = cmp_nvim_lsp.default_capabilities()
+    local capabilities = require('blink.cmp').get_lsp_capabilities()
 
     -- Define the on_attach function for LSP specific keymaps and settings
     local on_attach = function(client, bufnr)
@@ -54,6 +52,12 @@ return {
 
     -- Define servers and ensure they are installed
     local servers = {
+      -- Add new servers here
+      html = {},
+      cssls = {},
+      tailwindcss = {},
+      ['typescript-language-server'] = {},
+      pyright = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -69,20 +73,25 @@ return {
           },
         },
       },
-      -- Add other servers like: clangd = {}, pyright = {}, tsserver = {}, etc.
     }
 
-    local ensure_installed = vim.tbl_keys(servers)
-    vim.list_extend(ensure_installed, {
-      'stylua', -- Formatter
-      'prettierd', -- Formatter
-      -- Add other tools like linters, debuggers here
-    })
-    mason_tool_installer.setup { ensure_installed = ensure_installed }
+    mason_tool_installer.setup {
+      ensure_installed = {
+        'html',
+        'cssls',
+        'tailwindcss',
+        'typescript-language-server',
+        'pyright',
+        'lua_ls',
+        'stylua', -- Formatter for Lua
+        'prettierd', -- Formatter for web (JS, TS, CSS, HTML)
+        'ruff', -- Formatter & Linter for Python
+        -- Add other tools like linters, debuggers here
+      },
+    }
 
     -- Setup mason-lspconfig to bridge mason and lspconfig
     mason_lspconfig.setup {
-      ensure_installed = vim.tbl_keys(servers), -- Ensure only LSP servers listed above are managed
       handlers = {
         -- Default handler: Sets up LSP server with lspconfig
         function(server_name)
@@ -101,4 +110,3 @@ return {
     }
   end,
 }
-

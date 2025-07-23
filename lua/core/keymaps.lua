@@ -22,6 +22,19 @@ keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
+-- fzf-lua keymappings
+keymap.set('n', '<leader><space>', function()
+  require('fzf-lua').git_files()
+end, { desc = 'fzf Git Files' })
+
+keymap.set('n', '<leader>/', function()
+  require('fzf-lua').live_grep_native()
+end, { desc = 'fzf Grep' })
+
+keymap.set('n', '<leader>s', function()
+  require('fzf-lua').spell_suggest { winopts = { relative = 'cursor', row = 1.01, col = 0, height = 0.2, width = 0.2 } }
+end, { desc = 'fzf Spellcheck' })
+
 -- NOTE: The <C-h/j/k/l> window navigation keymaps are now handled by
 -- the vim-tmux-navigator plugin configuration in lua/plugins/tmux-nav.lua
 -- If you want *Neovim-only* window navigation without tmux integration,

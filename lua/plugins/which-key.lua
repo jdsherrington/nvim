@@ -3,7 +3,9 @@ return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
   opts = {
-    -- your which-key config options here
+    win = {
+      border = 'single',
+    },
   },
   keys = {
     {
@@ -15,4 +17,3 @@ return {
     },
   },
 }
-

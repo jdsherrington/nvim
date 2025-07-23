@@ -13,13 +13,16 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Load Core Configuration ]]
+require 'core.autocmds'
 require 'core.options'
 require 'core.keymaps'
-require 'core.autocmds'
 
 require('lazy').setup {
   spec = {
     { import = 'plugins' },
+  },
+  ui = {
+    border = 'single',
   },
   -- Configure any other lazy options here (performance, UI, etc.)
   -- For example:

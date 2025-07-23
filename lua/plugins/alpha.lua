@@ -9,13 +9,14 @@ return {
 
     -- Your ASCII logo
     local logo = {
-      'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNh{    `?8NMMMMMMMMMMMMMM:      _a`       ',
-      'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNWMMMMi  `mMMMMWNNNNNNNNNNNN|     ~NMa       ',
-      '            ``      ``            `NMMMy  `QMMMZ        `       `_>QMMMh!~`   ',
-      '            :WEZn-  :WEZn-         HMMMy   |naZP.      `ZqZn+,sEMMMMMMMMMMW8i.',
-      '            7MMMMr  :MMMMr         HMMM8`               uMMMW~  `_>QMMMh!~`   ',
-      'qqqqqqqqqqqQMMMMW!  :MMMMNqqqqqP   xMMMMNEqqqqqqqqqqqqENMMMMN~     ^NMk`      ',
-      'MMMMMMMMMMMMMW#C~   :MMMMMMMMMMH    {hNMMMMMMMMMMMMMMMMMMWdv.       _a`       ',
+      '       ▒▒    ▒███████    ▒███████           ',
+      '      ████▒ ▓█████████░ ██████████          ',
+      '      █████▓      ▓███████████              ',
+      '       ▒█████▒     ▒███████████▒            ',
+      ' ░░      █████▓    ▒█████▒       ██████     ',
+      '████░     ▒█████░ ▓█████          ██████░   ',
+      '███████████▓    ▒█████░ ████████████████▒   ',
+      ' ▓███████████  ▒█████    ▒█████████████░    ',
     }
 
     -- Calculate dynamic vertical padding
@@ -23,7 +24,7 @@ return {
     padding_top = math.max(padding_top, 1)
 
     -- Define a custom highlight group for the logo
-    vim.api.nvim_set_hl(0, 'AlphaLogo', { ctermfg = 0, fg = '#292825' })
+    vim.api.nvim_set_hl(0, 'AlphaLogo', { ctermfg = 0, fg = '#1D222A', bold = true })
 
     -- *** Use the simpler layout structure from your original config ***
     dashboard.opts.layout = {
@@ -52,6 +53,8 @@ return {
           vim.cmd 'enew | setlocal buftype=nofile bufhidden=hide noswapfile | startinsert'
         end
 
+        vim.opt_local.statuscolumn = ''
+
         -- Map 'i' in normal mode to create the scratch buffer for the alpha buffer
         vim.keymap.set('n', 'i', create_scratch_buffer, {
           buffer = args.buf,
@@ -66,6 +69,18 @@ return {
       end,
       desc = 'Setup keymaps/options for alpha buffer',
     })
+
+    vim.api.nvim_create_autocmd('WinEnter', {
+      pattern = '*',
+      callback = function()
+        if vim.bo.filetype == 'alpha' then
+          vim.wo.number = false
+          vim.wo.relativenumber = false
+        end
+      end,
+      desc = 'Hide line numbers in alpha buffer',
+    })
   end,
+
   -- No need for the separate create_scratch_buffer function here anymore
 }

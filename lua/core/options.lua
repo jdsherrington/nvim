@@ -26,6 +26,7 @@ opt.splitright = true -- Configure how new splits should be opened
 opt.splitbelow = true
 opt.inccommand = 'split' -- Preview substitutions live
 opt.hlsearch = true -- Set highlight on search
+opt.fillchars:append { eob = ' ' } -- Replace end-of-buffer markers with empty space
 
 -- [[ Performance ]]
 opt.updatetime = 250 -- Decrease update time
@@ -43,4 +44,3 @@ opt.smartcase = true -- Override ignorecase if search pattern has uppercase lett
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
