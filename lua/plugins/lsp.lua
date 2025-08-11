@@ -6,7 +6,14 @@ return {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    { 'j-hui/fidget.nvim', opts = {} },
+    { 'j-hui/fidget.nvim', opts = {
+      notification = {
+        window = {
+          winblend = 0,
+          y_padding = 1,
+        },
+      },
+    } },
     -- nvim-cmp related LSP dependencies are managed by blink.cmp
   },
   config = function()
