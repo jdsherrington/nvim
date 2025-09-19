@@ -1,3 +1,33 @@
+local function filepath_with_git_root()
+  local filepath = vim.fn.expand '%:p'
+  if filepath == '' then
+    return ''
+  end
+
+  local git_root = vim.fn.systemlist('git -C ' .. vim.fn.fnameescape(vim.fn.expand '%:p:h') .. ' rev-parse --show-toplevel')[1]
+
+  if git_root and git_root ~= '' then
+    -- strip trailing slash
+    git_root = vim.fn.fnamemodify(git_root, ':p'):gsub('/$', '')
+    filepath = vim.fn.fnamemodify(filepath, ':p')
+
+    local repo_name = vim.fn.fnamemodify(git_root, ':t')
+    local git_icon = '' -- pick what you like: " ", " ", "git:" etc.
+
+    if filepath:sub(1, #git_root) == git_root then
+      local relpath = filepath:sub(#git_root + 2)
+      if relpath == '' then
+        return git_icon .. repo_name .. '/' .. vim.fn.fnamemodify(filepath, ':t')
+      else
+        return git_icon .. repo_name .. '/' .. relpath
+      end
+    end
+  end
+
+  -- Not a git repo → fall back
+  return vim.fn.fnamemodify(filepath, ':~')
+end
+
 local function make_lualine_transparent()
   local groups = {
     'lualine_c_inactive',
@@ -111,9 +141,16 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { 'filename' },
-        lualine_x = { 'encoding', 'filetype' },
+        lualine_b = { 'branch', 'diff', 'diagnostics', 'searchcount', 'selectioncount' },
+        lualine_c = {
+          {
+            filepath_with_git_root,
+            cond = function()
+              return vim.fn.expand '%:t' ~= ''
+            end,
+          },
+        },
+        lualine_x = { 'lsp_status', 'filesize' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },
