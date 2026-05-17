@@ -11,7 +11,6 @@ end
 require('mason-lspconfig').setup({
   ensure_installed = {
     'lua_ls',
-    'nixd',
     'ts_ls',
     'html',
     'cssls',

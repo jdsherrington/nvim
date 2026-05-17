@@ -1,6 +1,7 @@
 local languages = {
   'bash',
   'html',
+  'html_tags',
   'lua',
   'markdown',
   'vim',
