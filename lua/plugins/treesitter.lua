@@ -1,16 +1,30 @@
--- ~/.config/nvim/lua/plugins/treesitter.lua
-return {
-  'nvim-treesitter/nvim-treesitter',
-  build = ':TSUpdate',
-  event = { 'BufReadPre', 'BufNewFile' }, -- Load early for highlighting/indent
-  config = function()
-    require('nvim-treesitter.configs').setup {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'astro', 'javascript', 'typescript', 'python', 'rust' }, -- Add more languages
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true },
-      -- Add other modules like textobjects, context, etc. if desired
-      -- textobjects = { ... }
-    }
-  end,
+local languages = {
+  'bash',
+  'html',
+  'lua',
+  'markdown',
+  'vim',
+  'vimdoc',
+  'javascript',
+  'typescript',
+  'python',
+  'nix',
 }
+
+require('nvim-treesitter').setup({
+  install_dir = vim.fn.stdpath('data') .. '/site',
+})
+
+if #vim.api.nvim_list_uis() > 0 then
+  require('nvim-treesitter').install(languages)
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('jds-treesitter', { clear = true }),
+  pattern = languages,
+  callback = function()
+    if pcall(vim.treesitter.start) then
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+  end,
+})
